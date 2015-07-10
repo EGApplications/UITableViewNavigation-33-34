@@ -13,6 +13,10 @@
 @property (strong, nonatomic) NSString* path;
 @property (strong, nonatomic) NSArray* contents;
 
+@property (strong, nonatomic) NSArray* tempFolderContents;
+
+@property (strong, nonatomic) IBOutlet UITableView* tableView;
+
 - (id) initWithFolderPath:(NSString*) path;
 
 

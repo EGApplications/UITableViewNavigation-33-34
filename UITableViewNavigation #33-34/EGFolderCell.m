@@ -2,7 +2,7 @@
 //  EGFolderCell.m
 //  UITableViewNavigation #33-34
 //
-//  Created by Евгений Глухов on 06.07.15.
+//  Created by Евгений Глухов on 08.07.15.
 //  Copyright (c) 2015 EGApps. All rights reserved.
 //
 

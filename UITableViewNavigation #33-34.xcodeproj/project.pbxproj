@@ -16,8 +16,8 @@
 		6C035BF51B43479E00172A23 /* file.png in Resources */ = {isa = PBXBuildFile; fileRef = 6C035BF31B43479E00172A23 /* file.png */; };
 		6C035BF61B43479E00172A23 /* folder.png in Resources */ = {isa = PBXBuildFile; fileRef = 6C035BF41B43479E00172A23 /* folder.png */; };
 		6C035BFA1B4449AD00172A23 /* Storyboard.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 6C035BF91B4449AD00172A23 /* Storyboard.storyboard */; };
-		6CCC5FEB1B4B22EF0021121B /* EGFolderCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 6CCC5FEA1B4B22EF0021121B /* EGFolderCell.m */; };
-		6CCC5FEE1B4B28940021121B /* EGFileCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 6CCC5FED1B4B28940021121B /* EGFileCell.m */; };
+		6C6C20591B4D6A5600449C4D /* EGFolderCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 6C6C20581B4D6A5600449C4D /* EGFolderCell.m */; };
+		6C6C205C1B4D6A6F00449C4D /* EGFileCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 6C6C205B1B4D6A6F00449C4D /* EGFileCell.m */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -46,10 +46,10 @@
 		6C035BF31B43479E00172A23 /* file.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = file.png; sourceTree = "<group>"; };
 		6C035BF41B43479E00172A23 /* folder.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = folder.png; sourceTree = "<group>"; };
 		6C035BF91B4449AD00172A23 /* Storyboard.storyboard */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.storyboard; path = Storyboard.storyboard; sourceTree = "<group>"; };
-		6CCC5FE91B4B22EF0021121B /* EGFolderCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = EGFolderCell.h; sourceTree = "<group>"; };
-		6CCC5FEA1B4B22EF0021121B /* EGFolderCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = EGFolderCell.m; sourceTree = "<group>"; };
-		6CCC5FEC1B4B28930021121B /* EGFileCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = EGFileCell.h; sourceTree = "<group>"; };
-		6CCC5FED1B4B28940021121B /* EGFileCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = EGFileCell.m; sourceTree = "<group>"; };
+		6C6C20571B4D6A5600449C4D /* EGFolderCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = EGFolderCell.h; sourceTree = "<group>"; };
+		6C6C20581B4D6A5600449C4D /* EGFolderCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = EGFolderCell.m; sourceTree = "<group>"; };
+		6C6C205A1B4D6A6F00449C4D /* EGFileCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = EGFileCell.h; sourceTree = "<group>"; };
+		6C6C205B1B4D6A6F00449C4D /* EGFileCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = EGFileCell.m; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -143,10 +143,10 @@
 		6CCC5FEF1B4B28990021121B /* Cells */ = {
 			isa = PBXGroup;
 			children = (
-				6CCC5FE91B4B22EF0021121B /* EGFolderCell.h */,
-				6CCC5FEA1B4B22EF0021121B /* EGFolderCell.m */,
-				6CCC5FEC1B4B28930021121B /* EGFileCell.h */,
-				6CCC5FED1B4B28940021121B /* EGFileCell.m */,
+				6C6C20571B4D6A5600449C4D /* EGFolderCell.h */,
+				6C6C20581B4D6A5600449C4D /* EGFolderCell.m */,
+				6C6C205A1B4D6A6F00449C4D /* EGFileCell.h */,
+				6C6C205B1B4D6A6F00449C4D /* EGFileCell.m */,
 			);
 			name = Cells;
 			sourceTree = "<group>";
@@ -254,10 +254,10 @@
 			buildActionMask = 2147483647;
 			files = (
 				6C035BEF1B433DE600172A23 /* EGTableViewController.m in Sources */,
-				6CCC5FEB1B4B22EF0021121B /* EGFolderCell.m in Sources */,
+				6C6C20591B4D6A5600449C4D /* EGFolderCell.m in Sources */,
 				6C035BCD1B41E47100172A23 /* AppDelegate.m in Sources */,
 				6C035BCA1B41E47100172A23 /* main.m in Sources */,
-				6CCC5FEE1B4B28940021121B /* EGFileCell.m in Sources */,
+				6C6C205C1B4D6A6F00449C4D /* EGFileCell.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

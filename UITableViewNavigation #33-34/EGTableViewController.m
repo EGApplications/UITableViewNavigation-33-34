@@ -15,6 +15,8 @@
 @property (strong, nonatomic) NSMutableArray* files;  // Массив для файлов
 @property (strong, nonatomic) NSMutableArray* directories; // Массив для папок (сортировка)
 
+@property (assign, nonatomic) unsigned long long currentFolderSize;
+
 @end
 
 @implementation EGTableViewController
@@ -71,9 +73,9 @@
     
     [super viewDidLoad];
     
+    self.tempFolderContents = [NSMutableArray array]; // инициализируем временный массив, который будем использовать в методе подсчета размера папки
+    
     if (!self.path) {
-        
-        NSLog(@"не установился");
         
         self.path = @"/Users/Evgen/Documents/EG Apps/HomeWork";
         
@@ -150,6 +152,71 @@
     }
     
     return [NSString stringWithFormat:@"%.2f %@", fileSize, units[index]];
+    
+}
+
+- (NSString*) folderSizeToCount:(NSMutableArray*) foldersArray { // Метод рекурсивно считает размер папки!
+    // В метод передаем массив путей, по которым лежат папки.
+    
+    // РЕКУРСИЯ ЖИВЕТ ЗДЕСЬ!!!
+    
+    NSString* result;
+    
+    NSMutableArray* tempFoldersArray = [NSMutableArray array]; // временный массив
+    
+    if ([foldersArray count] > 0) { // Если есть директории, ищем файлы
+    
+        for (NSString* path in foldersArray) {
+            
+            self.tempFolderContents = [[NSFileManager defaultManager] contentsOfDirectoryAtPath:path error:nil];
+            // В зависимости от того, сколько у нас директорий, у каждой считываем контент
+            
+            for (int i = 0; i < [self.tempFolderContents count]; i++) {
+                // Пробегаемся по контенту определенного пути, чтобы понять, где файлы, а где директории и, соответственно, их добавляем в массив для следующего прогона по методу
+                
+                NSString* objectName = [self.tempFolderContents objectAtIndex:i];
+                
+                NSString* objectPath = [path stringByAppendingPathComponent:objectName];
+                
+                BOOL isDirectory = NO;
+                
+                [[NSFileManager defaultManager] fileExistsAtPath:objectPath isDirectory:&isDirectory];
+                
+                if (isDirectory) {
+                    
+                    // Если директория, кладем путь до нее в массив
+                    [tempFoldersArray addObject:objectPath];
+                    
+                } else {
+                    // Если файл, считаем его размер и суммируем с предыдущими посчитанными.
+                    
+                    NSDictionary* attributes = [[NSFileManager defaultManager] attributesOfItemAtPath:objectPath error:nil];
+                    
+                    self.currentFolderSize = self.currentFolderSize + [attributes fileSize];
+                    
+                }
+                
+            }
+            
+        }
+        
+        // После того, как прошли по всем папкам, очищаем массив, а новые, найденные директории, на уровень глубже, добавляем в очищенный массив.
+        [foldersArray removeAllObjects];
+        
+        foldersArray = tempFoldersArray;
+        
+        return [self folderSizeToCount:foldersArray]; // РЕКУРСИЯ
+        
+    } else {
+        // Смотрим файлы по директориям, пока директорий не станет 0, тогда все посчитанные файлы считаем
+        
+        result = [self fileSizeFromValue:self.currentFolderSize];
+        
+        return result;
+        
+    }
+
+    return nil;
     
 }
 
@@ -294,10 +361,16 @@
         
         cell.folderName.text = fileName;
         
-        cell.folderSize.text = [NSString stringWithFormat:@"PROCESSING..."];
+        NSString* path = [self.path stringByAppendingPathComponent:fileName];
         
-        NSLog(@"description - %@", [cell description]);
+        self.currentFolderSize = 0;
         
+        NSMutableArray* foldersArray = [NSMutableArray arrayWithObject:path];
+        
+        cell.folderSize.text = [self folderSizeToCount:foldersArray]; // рекурсия! (подсчет размер папки)
+        
+        cell.folderImage.image = [UIImage imageNamed:@"folder.png"];
+    
         return cell;
     
     } else {
@@ -313,9 +386,15 @@
         
         cell.fileSize.text = [self fileSizeFromValue:[attributes fileSize]];
         
-        cell.fileDate.text = [NSString stringWithFormat:@"PROCESSING..."];
+        NSDateFormatter* formatter = [[NSDateFormatter alloc] init];
         
-        NSLog(@"description - %@", [cell description]);
+        [formatter setDateFormat:@"dd.MM.yyyy HH:mm"];
+        
+        NSDate* date = [attributes fileModificationDate];
+        
+        cell.fileDate.text = [NSString stringWithFormat:@"%@", [formatter stringFromDate:date]];
+        
+        cell.fileImage.image = [UIImage imageNamed:@"file.png"];
         
         return cell;
         
@@ -359,6 +438,7 @@
     
     // Удаление папки/файла
     
+    // удаляем файл из массива контента
     NSMutableArray* tempArray = [NSMutableArray arrayWithArray:self.contents];
 
     NSString* fileToDelete = [tempArray objectAtIndex:indexPath.row];
@@ -371,6 +451,8 @@
     
     NSString* path = [self.path stringByAppendingPathComponent:fileToDelete];
     
+    // Убираем файлменеджером файл (безвозвратное удаление)
+    
     [[NSFileManager defaultManager] removeItemAtPath:path error:&error];
     
     if (error) {
@@ -380,6 +462,7 @@
     }
     
     [self.tableView beginUpdates];
+    // анимация удаления
     
     [self.tableView deleteRowsAtIndexPaths:@[indexPath] withRowAnimation:UITableViewRowAnimationLeft];
     
